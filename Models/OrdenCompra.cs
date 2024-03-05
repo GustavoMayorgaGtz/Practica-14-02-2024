@@ -1,26 +1,33 @@
-﻿namespace Practica_14_02_2024.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Practica_14_02_2024.Models
 {
+    [Table("ordenescompra")] //Definir que este va a ser un model llamada Comprador
     public class OrdenCompra
     {
-        idOrdenCompra int auto_increment primary key,
-        consecutivo varchar(200),
-proyecto varchar(200),
-status int default 1,
-no_consecutivo int,
-referencia varchar(200),
-fecha date,
-empresa varchar(200),
-vendedor varchar(200),
-direccion varchar(200),
-subtotal real,
-iva real,
-total real,
-moneda varchar(20),
-condicionPago varchar(200),
-entrega varchar(200),
-tiempoEntrega varchar(200),
-activo bool default true,
-idCompradorFK int,
-foreign key(idCompradorFK) references Comprador(idcomprador) on delete cascade
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; } // auto_increment primary key
+        public string Consecutivo { get; set; }
+        public string Proyecto { get; set; }
+        public int Status { get; set; }// default 1
+        public int NoConsecutivo { get; set; }
+        public string Referencia { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime FechaRegistro { get; set; }
+        public string Empresa { get; set; }
+        public string Vendedor { get; set; }
+        public string Direccion { get; set; }
+        public float Subtotal { get; set; }
+        public float Iva { get; set; }
+        public float Total { get; set; }
+        public string Moneda { get; set; }
+        public string CondicionPago { get; set; }
+        public string Entrega { get; set; }
+        public string TiempoEntrega { get; set; }
+        public bool Activo { get; set; } // default true
+                                                 // Relación con la tabla Comprador
+        public virtual Comprador comprador { get; set; } // Representa la relación con la tabla Comprador
     }
 }

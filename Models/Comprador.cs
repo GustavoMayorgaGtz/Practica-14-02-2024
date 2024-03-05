@@ -1,14 +1,13 @@
-﻿using MessagePack;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Practica_14_02_2024.Models
 {
-    [Table("Comprador")] //Definir que este va a ser un model llamada Comprador
+    [Table("compradores")] //Definir que este va a ser un model llamada Comprador
     public class Comprador
     {
-        [System.ComponentModel.DataAnnotations.Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdComprador { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public string Nombre { get; set; }
 
         public string Telefono { get; set; }
@@ -21,7 +20,5 @@ namespace Practica_14_02_2024.Models
 
         [DataType(DataType.Date)]
         public DateTime FechaRegistro {get; set;}
-
-        public virtual Comprador comprador { get; set; }
     }
 }
