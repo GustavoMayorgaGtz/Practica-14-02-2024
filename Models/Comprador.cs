@@ -20,5 +20,8 @@ namespace Practica_14_02_2024.Models
 
         [DataType(DataType.Date)]
         public DateTime FechaRegistro {get; set;}
+
+        public int OrdenCompraId { get; set; }
+        public virtual OrdenCompra OrdenCompra { get; set; }
     }
 }

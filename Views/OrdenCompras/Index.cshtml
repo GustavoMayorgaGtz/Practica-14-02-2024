@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Practica_14_02_2024.Models.Comprador>
+﻿@model IEnumerable<Practica_14_02_2024.Models.OrdenCompra>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                @Html.DisplayNameFor(model => model.Proyecto)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefono)
+                @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Correo)
+                @Html.DisplayNameFor(model => model.NoConsecutivo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Activo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.URLpath)
+                @Html.DisplayNameFor(model => model.Referencia)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaRegistro)
@@ -37,19 +34,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
+                @Html.DisplayFor(modelItem => item.Proyecto)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Correo)
+                @Html.DisplayFor(modelItem => item.NoConsecutivo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Activo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.URLpath)
+                @Html.DisplayFor(modelItem => item.Referencia)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaRegistro)

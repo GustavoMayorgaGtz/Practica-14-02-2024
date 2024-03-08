@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Practica_14_02_2024.Context;
 
@@ -11,9 +12,10 @@ using Practica_14_02_2024.Context;
 namespace Practica_14_02_2024.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    partial class ProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20240307222334_Regada mia")]
+    partial class Regadamia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,9 +46,6 @@ namespace Practica_14_02_2024.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrdenCompraId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -55,9 +54,12 @@ namespace Practica_14_02_2024.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ordencompraId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OrdenCompraId");
+                    b.HasIndex("ordencompraId");
 
                     b.ToTable("compradores");
                 });
@@ -94,13 +96,13 @@ namespace Practica_14_02_2024.Migrations
 
             modelBuilder.Entity("Practica_14_02_2024.Models.Comprador", b =>
                 {
-                    b.HasOne("Practica_14_02_2024.Models.OrdenCompra", "OrdenCompra")
+                    b.HasOne("Practica_14_02_2024.Models.OrdenCompra", "ordencompra")
                         .WithMany()
-                        .HasForeignKey("OrdenCompraId")
+                        .HasForeignKey("ordencompraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OrdenCompra");
+                    b.Navigation("ordencompra");
                 });
 #pragma warning restore 612, 618
         }
