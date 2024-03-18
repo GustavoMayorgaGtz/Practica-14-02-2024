@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -32,12 +32,32 @@
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Activo" /> @Html.DisplayNameFor(model => model.Activo)
                 </label>
+
             </div>
+              <div class="form-group">
+                <input type="hidden" asp-for="URLpath" class="form-control" />
+            </div>
+            <!-------------------------------------------->
             <div class="form-group">
-                <label asp-for="URLpath" class="control-label"></label>
-                <input asp-for="URLpath" class="form-control" />
-                <span asp-validation-for="URLpath" class="text-danger"></span>
+                   <label class="control-label">Imagen</label>
+                   <input type="file" accept="image/png, image/gif, image/jpeg"  name="foto" itemid="foto" id="foto"/>
+            </div> 
+            <img id="foto-perfil" src="https://mayteygustavo.blob.core.windows.net/sergiouwu/detalle1.png" style="width: 70%; height: 70%;" />
+            <!-------------------------------------------->
+            <div class="form-group form-crear-ordencompra">
+                <label class="control-label">OrdenCompra</label>
+                @if (ViewBag != null && ViewBag.OrdenCompra is SelectList && (ViewBag.OrdenCompra as SelectList).Count() > 0)
+                {
+                    @Html.DropDownList("OrdenCompraId", ViewBag.OrdenCompra as SelectList)
+                }
+                else
+                {
+                     <select>
+                         <option disabled selected>No hay Ordenes disponibles</option>
+                     </select>
+                }   
             </div>
+            <!-------------------------------------------->
             <div class="form-group">
                 <label asp-for="FechaRegistro" class="control-label"></label>
                 <input asp-for="FechaRegistro" class="form-control" />
@@ -55,5 +75,23 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+                    <script>
+                window.addEventListener('load', () => {
+                    console.log("loaded");
+                    let foto_perfil = document.getElementById('foto-perfil');
+                    let reader = new FileReader();
+                    let input = document.getElementById('foto');
+                    input.addEventListener('input', (x) => {
+                        console.log("input changed");
+                        reader.readAsDataURL(input.files[0]);
+                    });
+                    reader.onload = (e) => {
+                        console.log("img reloaded");
+                        foto_perfil.setAttribute("src", e.target.result);
+                    };
+                });
+                </script>
 }

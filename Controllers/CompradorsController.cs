@@ -10,6 +10,11 @@ using Microsoft.Extensions.Options;
 using Practica_14_02_2024.Context;
 using Practica_14_02_2024.Helpers;
 using Practica_14_02_2024.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Practica_14_02_2024.Controllers
 {
@@ -18,9 +23,13 @@ namespace Practica_14_02_2024.Controllers
         private readonly ProjectContext _context;
         private readonly AzureStorageConfig _config;
 
-        public CompradorsController(ProjectContext context, IOptions<AzureStorageConfig> config)
+        private readonly ILogger<CompradorsController> _logger;
+
+  
+        public CompradorsController(ProjectContext context, IOptions<AzureStorageConfig> config, ILogger<CompradorsController> logger)
         {
             _context = context;
+            _logger = logger;
             _config = config.Value;
         }
 
@@ -56,74 +65,51 @@ namespace Practica_14_02_2024.Controllers
             var orden_comprador = await _context.OrdenCompra.ToListAsync();
             ViewBag.OrdenCompra = new SelectList(orden_comprador, "Id", "Proyecto");
             // Puedes agregar un mensaje en el ViewBag para ser utilizado en la vista.
-            ViewBag.AlertMessage = "¡Esto es una alerta desde el servidor!";
+           // ViewBag.AlertMessage = "¡Esto es una alerta desde el servidor!";
 
             return View();
         }
+
 
         // POST: Compradors/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nombre,Telefono,Correo,Activo,FechaRegistro, OrdenCompra")] Comprador comprador, IFormFile foto)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Telefono,Correo,Activo,URLpath,FechaRegistro,OrdenCompra")] Comprador comprador, IFormFile foto)
         {
-            // Puedes agregar un mensaje en el ViewBag para ser utilizado en la vista.
-
-
-            ViewBag.AlertMessage = "" + comprador.Correo + "" + comprador.Telefono + "" +
-                                       comprador.Nombre + "" + comprador.Activo + "" + comprador.URLpath + "" + comprador.FechaRegistro + "" + comprador.OrdenCompra;
-
-
-            //ViewBag.AlertMessage = "todo bien";
+            if ("Nombre,Telefono,Correo,Activo,URLpath,FechaRegistro,OrdenCompra.Id".Split(',').All(c => ModelState.ContainsKey(c)))
+            {
                 if (foto == null)
                 {
                     comprador.URLpath = StorageHelper.URL_Image;
-                }else
+                    _logger.LogInformation("__________________________________________________________________________________________________");
+                    _logger.LogInformation("No se detecto imagen");
+                    _logger.LogInformation("__________________________________________________________________________________________________");
+                }
+                else
                 {
-                    
+                    _logger.LogInformation("__________________________________________________________________________________________________");
+                    _logger.LogInformation("Si se detecto una imagen");
+                    _logger.LogInformation(_config.Cuenta);
+                    _logger.LogInformation(_config.Llave);
+                    _logger.LogInformation(_config.Contenedor);
+                    _logger.LogInformation("__________________________________________________________________________________________________");
+                    ViewBag.AlertMessage = foto.Length;
                     string extension = foto.FileName.Split(".")[1];
-                    ViewBag.AlertMessage = ""+foto.FileName;
                     string nombre = $"{Guid.NewGuid()}.{extension}";
                     comprador.URLpath = await StorageHelper.SubirArchivo(foto.OpenReadStream(), nombre, _config);
                 }
-
-                try
-                {
-
-                    _context.Set<Comprador>().Add(comprador);
-                    _context.Entry(comprador.OrdenCompra).State = EntityState.Unchanged;
-
-                    int registrosGuardados = await _context.SaveChangesAsync();
-
-                    if (registrosGuardados > 0)
-                    {
-                        // Log exitoso
-                        Console.WriteLine($"Se guardaron {registrosGuardados} registros en la base de datos.");
-
-                        //return RedirectToAction("Compradors");
-                    }
-                    else
-                    {
-                        // Log sin cambios
-                        Console.WriteLine("No se realizaron cambios en la base de datos.");
-
-                        //return RedirectToAction("OtraAccion");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.AlertMessage = "" + ex;
-                }
-            //}
-            //else
-            //{
-              
+                _context.Set<Comprador>().Add(comprador);
+                _context.Entry(comprador.OrdenCompra).State = EntityState.Unchanged;
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
             return View(comprador);
         }
 
-        // GET: Compradors/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+            // GET: Compradors/Edit/5
+            public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Comprador == null)
             {
@@ -131,6 +117,8 @@ namespace Practica_14_02_2024.Controllers
             }
 
             var comprador = await _context.Comprador.FindAsync(id);
+            var orden_comprador = await _context.OrdenCompra.ToListAsync();
+            ViewBag.OrdenCompra = new SelectList(orden_comprador, "Id", "Proyecto");
             if (comprador == null)
             {
                 return NotFound();
@@ -143,17 +131,49 @@ namespace Practica_14_02_2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Telefono,Correo,Activo,URLpath,FechaRegistro")] Comprador comprador)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Telefono,Correo,Activo,URLpath,FechaRegistro,OrdenCompraId")] Comprador comprador, IFormFile foto)
         {
+            _logger.LogInformation("__________________________________________________________________________________________________");
+            _logger.LogInformation("Valor de orden de compra: ");
+            _logger.LogInformation(comprador.OrdenCompraId.ToString());
+            //comprador.OrdenCompraId = 1;
+          //  _logger.LogInformation(comprador.OrdenCompra.ToString());
+
+            _logger.LogInformation("__________________________________________________________________________________________________");
             if (id != comprador.Id)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            else
             {
+                
+            }
+
+            //if (ModelState.IsValid)
+            //{
                 try
                 {
+                    if (foto == null)
+                    {
+                        comprador.URLpath = StorageHelper.URL_Image;
+                        _logger.LogInformation("__________________________________________________________________________________________________");
+                        _logger.LogInformation("No se detecto imagen");
+                        _logger.LogInformation("__________________________________________________________________________________________________");
+                    }
+                    else
+                    {
+                        _logger.LogInformation("__________________________________________________________________________________________________");
+                        _logger.LogInformation("Si se detecto una imagen");
+                        _logger.LogInformation(_config.Cuenta);
+                        _logger.LogInformation(_config.Llave);
+                        _logger.LogInformation(_config.Contenedor);
+                        _logger.LogInformation("__________________________________________________________________________________________________");
+                        ViewBag.AlertMessage = foto.Length;
+                        string extension = foto.FileName.Split(".")[1];
+                        string nombre = $"{Guid.NewGuid()}.{extension}";
+                        comprador.URLpath = await StorageHelper.SubirArchivo(foto.OpenReadStream(), nombre, _config);
+                    }
+           
                     _context.Update(comprador);
                     await _context.SaveChangesAsync();
                 }
@@ -169,7 +189,14 @@ namespace Practica_14_02_2024.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            //}
+            //else
+            //{
+            //    _logger.LogInformation("__________________________________________________________________________________________________");
+            //    _logger.LogInformation("El modelo no es valido");
+            //    _logger.LogInformation(ModelState.ToString());
+            //    _logger.LogInformation("__________________________________________________________________________________________________");
+            //}
             return View(comprador);
         }
 
