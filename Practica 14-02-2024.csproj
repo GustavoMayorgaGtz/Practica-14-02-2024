@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\edit.css" />
+    <Content Remove="wwwroot\css\indexcomprador.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\indexcomprador.css" />
+    <None Include="wwwroot\css\edit.css" />
     <None Include="wwwroot\css\details.css" />
   </ItemGroup>
 

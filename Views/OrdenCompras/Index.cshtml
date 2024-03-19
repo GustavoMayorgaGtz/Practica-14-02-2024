@@ -4,56 +4,58 @@
     ViewData["Title"] = "Index";
 }
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <!-- Vincula tu hoja de estilos -->
+    <link href="~/css/indexcomprador.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
 <h1>Index</h1>
 
-<p>
+<p class="create">
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Proyecto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoConsecutivo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Referencia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRegistro)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="primarycontainer">
+
 @foreach (var item in Model) {
-        <tr>
-            <td>
+            <div class="userContainer">
+                    <div>
+                        <b>
+                            Telefono:
+                        </b>
                 @Html.DisplayFor(modelItem => item.Proyecto)
-            </td>
-            <td>
+
+                    </div>
+                    <div>
+                        <b>
+                            Estado de orden de compra:
+                        </b>
                 @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
+                   </div>
+                   <div>
+                       <b>
+                            Numero consecutivo:
+                      </b>
                 @Html.DisplayFor(modelItem => item.NoConsecutivo)
-            </td>
-            <td>
+                   </div>
+                   <div>
+                        <b>Referencia:</b>
                 @Html.DisplayFor(modelItem => item.Referencia)
-            </td>
-            <td>
+                   </div>
+                   <div>
+                        <b>Fecha de registro:</b>
                 @Html.DisplayFor(modelItem => item.FechaRegistro)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+                   </div>
+                   <div class="container-buttons">
+                    <a class="edit" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a  asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                    <a class="details" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    </div>
+            </div>
 }
-    </tbody>
-</table>
+
+</div>
+</body>

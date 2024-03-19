@@ -3,42 +3,48 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
-<h4>OrdenCompra</h4>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>@ViewData["Title"]</title>
+    <!-- Vincula tu hoja de estilos -->
+    <link href="~/css/edit.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<h1>Editando orden de compra</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <div class="group">
                 <label asp-for="Proyecto" class="control-label"></label>
                 <input asp-for="Proyecto" class="form-control" />
-                <span asp-validation-for="Proyecto" class="text-danger"></span>
+                <hr />
             </div>
-            <div class="form-group">
+            <div class="group">
                 <label asp-for="Status" class="control-label"></label>
                 <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <hr />
             </div>
-            <div class="form-group">
+            <div class="group">
                 <label asp-for="NoConsecutivo" class="control-label"></label>
                 <input asp-for="NoConsecutivo" class="form-control" />
-                <span asp-validation-for="NoConsecutivo" class="text-danger"></span>
+                <hr />
             </div>
-            <div class="form-group">
+            <div class="group">
                 <label asp-for="Referencia" class="control-label"></label>
                 <input asp-for="Referencia" class="form-control" />
-                <span asp-validation-for="Referencia" class="text-danger"></span>
+                <hr />
             </div>
-            <div class="form-group">
+            <div class="group">
                 <label asp-for="FechaRegistro" class="control-label"></label>
                 <input asp-for="FechaRegistro" class="form-control" />
-                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+                <hr />
             </div>
-            <div class="form-group">
+            <div class="group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -46,8 +52,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btnBack" asp-action="Index">Back to List</a>
 </div>
+</body>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -3,67 +3,63 @@
 @{
     ViewData["Title"] = "Index";
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <!-- Vincula tu hoja de estilos -->
+    <link href="~/css/indexcomprador.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Compradores</h1>
 
-<h1>Index</h1>
-
-<p>
+<p class="create">
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Correo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Activo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.URLpath) 
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRegistro)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="primarycontainer">
 @foreach (var item in Model) {
-        <tr>
-            <td>
+    <div class="userContainer">
+                <div>
+                    <b>Nombre:</b>
                 @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
+                </div>
+                <div>
+                    <b>
+                        Telefono:
+                    </b>
                 @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
+                </div>
+                <div>
+                    <b>
+                        Correo:
+                    </b>
                 @Html.DisplayFor(modelItem => item.Correo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Activo)
-            </td>
-            <td>
-                    @{ 
-                        var urlPath = Html.DisplayFor(modelItem => item.URLpath);
-                    }
-
-                    <img src="@urlPath" alt="Descripción de la imagen">
-            </td>
-            <td>
+               </div>
+               <div>
+                   <b>
+                        Imagen Establecida:
+                  </b>
+                @{ 
+                    var urlPath = Html.DisplayFor(modelItem => item.URLpath);
+                }
+                <img src="@urlPath" alt="Descripción de la imagen">
+               </div>
+               <div>
+                    <b>Estado del comprador:</b>
+                    @Html.DisplayFor(modelItem => item.Activo)
+               </div>
+               <div>
+                    <b>Fecha de registro:</b>
                 @Html.DisplayFor(modelItem => item.FechaRegistro)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+               </div>
+               <div class="container-buttons">
+                       <a class="edit" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                    <a class="details" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                    <a class="delete" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+                
+        </div>
 }
-    </tbody>
-</table>
+</div>
+</body>

@@ -3,63 +3,69 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>Comprador</h4>
-<hr />
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>@ViewData["Title"]</title>
+    <!-- Vincula tu hoja de estilos -->
+    <link href="~/css/edit.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<h1>Crear comprador</h1>
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <hr />
             </div>
-            <div class="form-group">
+            <div class="group">
                 <label asp-for="Telefono" class="control-label"></label>
                 <input asp-for="Telefono" class="form-control" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
+                <hr />
             </div>
-            <div class="form-group">
+            <div class="group">
                 <label asp-for="Correo" class="control-label"></label>
                 <input asp-for="Correo" class="form-control" />
-                <span asp-validation-for="Correo" class="text-danger"></span>
+                <hr />
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
+            <div class="group form-check">
+                <label class="form-check-label"></label>
                     <input class="form-check-input" asp-for="Activo" /> @Html.DisplayNameFor(model => model.Activo)
-                </label>
+                <hr />
             </div>
-          @*  <div class="form-group">
-                <label asp-for="URLpath" class="control-label"></label>
-                <input asp-for="URLpath" class="form-control" />
-                <span asp-validation-for="URLpath" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
+            <div class="group">
                 <label asp-for="FechaRegistro" class="control-label"></label>
                 <input asp-for="FechaRegistro" class="form-control"  type="date"/>
-                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+                <hr />
             </div>
-              <div class="form-group">
+              <div class="group">
                    <label class="control-label">Imagen</label>
                    <input type="file" accept="image/png, image/gif, image/jpeg"  name="foto" itemid="foto" id="foto"/>
+                   <hr />
             </div> 
-            <img id="foto-perfil" src="https://mayteygustavo.blob.core.windows.net/sergiouwu/detalle1.png" style="width: 70%; hei ght: 70%;" />
-            <div class="form-group form-crear-ordencompra">
+            <img id="foto-perfil" src="https://mayteygustavo.blob.core.windows.net/sergiouwu/detalle1.png"/>
+            <div class="group form-crear-ordencompra">
                 <label class="control-label">OrdenCompra</label>
-                @if (ViewBag != null && ViewBag.OrdenCompra is SelectList && (ViewBag.OrdenCompra as SelectList).Count() > 0)
-                {
-                    @Html.DropDownList("OrdenCompra.Id", ViewBag.OrdenCompra as SelectList)
-                }
-                else{
-                 <select>
-                     <option disabled selected>No hay Ordenes disponibles</option>
-                 </select>
-                }   
+                <div>
+                    @if (ViewBag != null && ViewBag.OrdenCompra is SelectList && (ViewBag.OrdenCompra as SelectList).Count() > 0)
+                    {
+                        @Html.DropDownList("OrdenCompra.Id", ViewBag.OrdenCompra as SelectList)
+                    }
+                    else
+                    {
+                     <select>
+                         <option disabled selected>No hay Ordenes disponibles</option>
+                     </select>
+                    }   
+                    <hr />
+                </div>
             </div>
-            <div class="form-group">
+            <div class="group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -69,7 +75,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
+</body>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
